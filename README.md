@@ -1,7 +1,7 @@
 # Scraped Job Data 
 
 
-Click [Here](https://github.com/picklesueat/data_jobs_data/raw/master/DataAnalyst.csv) for the Data Anaylst jobs dataset.   This will be updated with more job data, and more diverse job data as I scrape it.  
+Click [Here](https://github.com/picklesueat/data_jobs_data/raw/master/DataAnalyst.csv)(while holding alt) for the Data Anaylst jobs dataset.   This will be updated with more job data, and more diverse job data as I scrape it.  
 
 The glass_scraper scrapes a well known job site, and  has the ability to scrape thousands of jobs_data under any keyword you give it.   Please let me know if there are any errors, or just any inefficient code you see.  There is still a lot that can be done with this to make it better.  
 
