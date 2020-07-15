@@ -32,7 +32,7 @@ keyword = 'Data Analyst'
 url = "https://www.glassdoor.com/blog/tag/job-search/"
 
 
-#Inputs keyword and location, and bring you to the Job Listings
+#Inputs keyword and loc, and bring you to the Job Listings
 def go_to_listings(driver, loc):
 
     
@@ -45,10 +45,12 @@ def go_to_listings(driver, loc):
         # look for search bar field
         position_field = driver.find_element_by_xpath("//*[@id='sc.keyword']")
         location_field = driver.find_element_by_xpath("//*[@id='sc.location']")
-        location_field.clear()
+        
 
         # fill in with pre-defined data
+        position_field.clear()
         position_field.send_keys(keyword)
+        
         location_field.clear()
         location_field.send_keys(loc)
 
@@ -74,22 +76,33 @@ def go_to_listings(driver, loc):
         pass
 
 #Initializes driver, and navigates to URL
-def initialize_driver(path, url):
+def initialize_driver(path):
     #Initializing the webdriver
     options = webdriver.ChromeOptions()
     
+
+    ua = UserAgent()
+    userAgent = ua.random
+    options.add_argument(f'user-agent={userAgent}')
+    
+    #makes the driver more 'undetectale'
+    options.add_argument("--disable-blink-features"), options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+
     #Uncomment the line below if you'd like to scrape without a new Chrome window every time.
     #options.add_argument('headless')
     
     #Change the path to where chromedriver is in your home folder.
     driver = webdriver.Chrome(executable_path=path, options=options)
     driver.maximize_window()
+
     
-    driver.get(url)
     return driver
 
 def Xout_pop_ups(driver):
         #Test for the "Sign Up" prompt and get rid of it.
+    time.sleep(2)
     try:
         driver.find_element_by_class_name("selected").click()
     except Exception:
@@ -287,14 +300,16 @@ def make_sure_jobs(driver):
     except Exception:
         pass
     
-def get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = ' '):
+def get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = ' ', driver = ' '):
     
     '''Gathers jobs as a dataframe, scraped from Glassdoor'''
     
     count = 0 
 
+    if(loc == ' '):
+        driver = initialize_driver(path)
     
-    driver = initialize_driver(path, url)
+    driver.get(url)
     go_to_listings(driver,loc)
            
     
@@ -324,7 +339,8 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = ' '):
         #Going through each job in this page
         time.sleep(1.5)
         job_buttons = driver.find_elements_by_css_selector("li.jl.react-job-listing.gdGrid")  #jl for Job Listing. These are the buttons we're going to click.
-        print("JOBS PER PAGE: " + str(len(job_buttons)))
+        if(len(job_buttons) <=25):
+            print("JOBS PER PAGE: " + str(len(job_buttons)))
         for job_button in job_buttons: 
             if len(jobs) >= num_jobs:
                 print("Job Target Reached:" + str(len(jobs)) + '/' + str(num_jobs))
@@ -333,7 +349,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = ' '):
             status = click_listing(driver, job_button)
 
             #Weird error pops up here, so I'm on the lookout,
-            if(status != 'Fine'):
+            if(status == 'Failed'):
                 print(status)
                 break
 
@@ -354,11 +370,12 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = ' '):
             print("Scraping terminated before reaching target number of jobs. Needed {}, got {}.".format(num_jobs, len(jobs)))
             break
 
-    driver.close()
+    
     return pd.DataFrame(jobs)  #This line converts the dictionary object into a pandas DataFrame.
 
 
 def page_limit(keyword, num_jobs, verbose, path, slp_time, start_at = 0):
+    driver = initialize_driver(path)
     #General Location
     if(start_at == 0):
         df = get_jobs(keyword, 1, verbose, path, slp_time)
@@ -367,14 +384,15 @@ def page_limit(keyword, num_jobs, verbose, path, slp_time, start_at = 0):
     
     cities = top_cities()
     
-    for x in range(start_at,len(cities.index) - 150):
+    for x in range(start_at,len(cities.index) - 217):
         print("City Index: " + str(x))
         try:    
-            df = get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = (cities.iloc[x,0] + ', ' + cities.iloc[x,1]))
+            df = get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = (cities.iloc[x,0] + ', ' + cities.iloc[x,1]), driver = driver)
         except Exception:
             print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-            df = get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = (cities.iloc[x,0] + ', ' + cities.iloc[x,1]))
-        df.to_csv('glassdoor_job_data/' + keyword.replace(' ', '') + '.csv', index = False, mode='a', header=False)
+            df = get_jobs(keyword, num_jobs, verbose, path, slp_time, loc = (cities.iloc[x,0] + ', ' + cities.iloc[x,1]), driver = driver)
+        df.to_csv('Jobs_apply/glassdoor_job_data/' + keyword.replace(' ', '') + '.csv', index = False, mode='a', header=False)
+
 
 
 def top_cities():
@@ -398,10 +416,6 @@ def top_cities():
     state = pd.Series(state)
     df['City'] = city
     df['State'] = state
-    
-    #df['State'] = df['State'].replace('\n','', regex = False) --- THIS WILL NOT WORK TO REMOVE THE \n but the code 6 lines
-    #above will, I cannot figure out why
-    return df
     
     
 #to test program    
