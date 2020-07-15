@@ -1,11 +1,7 @@
 # Scraped Job Data 
+Download the CSV you want, or scrape your own data,  lmk if this helps you, and If you do some cool analysis, please share it with me as I'd love to see the different conclusions everyone comes to.
 
 
-Click [Here](https://github.com/picklesueat/data_jobs_data/raw/master/DataAnalyst.csv) for the Data Anaylst jobs dataset.   This will be updated with more job data, and more diverse job data as I scrape it.  
-
-The glass_scraper scrapes a well known job site, and  has the ability to scrape thousands of jobs_data under any keyword you give it.   Please let me know if there are any errors, or just any inefficient code you see.  There is still a lot that can be done with this to make it better.  
-
-Fair warning, after scraping 2000 jobs, glassdoor seemed to randomly display no jobs found pages, hence the driver.refresh().  I'm not sure how to get around this, but there was also a lot of testing that made unessecary requests to the site.  If you plan on scraping a LOT of data, I would set slp_time to be a little bit higher, just so the requests don't come into their server too fast.
 
 ## Thank you to:
 
