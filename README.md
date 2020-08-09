@@ -1,7 +1,7 @@
 # Scraped Job Data 
 Download the CSV you want, or scrape your own data,  lmk if this helps you, and If you do some cool analysis, please share it with me as I'd love to see the different conclusions everyone comes to.
 
-25k rows to be released soon 
+want total project to be around 25k rows
 
 
 ## Thank you to:
