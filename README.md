@@ -1,8 +1,8 @@
 # Scraped Job Data 
 Download the CSV you want, or scrape your own data,  lmk if this helps you, and If you do some cool analysis, please share it with me as I'd love to see the different conclusions everyone comes to.
 
-want total project to be around 25k rows
-Some Duplicates exist between the big csv and the breakdowns
+25K rows [here](https://www.kaggle.com/josephgutstadt/data-jobs)
+
 
 ## Thank you to:
 
