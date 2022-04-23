@@ -1,6 +1,8 @@
 # Scraped Job Data 
 Download the CSV you want, or scrape your own data.
 
+See my analysis of this dataset [here](https://www.kaggle.com/code/josephgutstadt/skills-for-a-data-scientist-analyst/notebook)
+
 ## Thank you to:
 
 * [Selenium](https://selenium-python.readthedocs.io/) - A tool designed for QA testing, but that actually works great for making these types of bots
