@@ -1,3 +1,7 @@
+# This was a project to understand the Data Science/Engineer/Analyst job market in June 2020.
+## See my [visualization of this data](https://www.kaggle.com/code/josephgutstadt/skills-for-a-data-scientist-analyst), including some basic data mining (association analysis)
+
+
 # Scraped Job Data 
 Download the CSV you want, or scrape your own data.
 
