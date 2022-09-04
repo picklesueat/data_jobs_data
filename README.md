@@ -4,6 +4,10 @@
 
 # Scraped Job Data 
 Download the CSV you want, or scrape your own data.
+![image](https://user-images.githubusercontent.com/9833065/188324500-604ad708-8896-4631-8d19-529d8f94b768.png)
+
+
+![image](https://user-images.githubusercontent.com/9833065/188324465-97f2925a-e484-418d-a54c-ac130865743c.png)
 
 See my analysis of this dataset [here](https://www.kaggle.com/code/josephgutstadt/skills-for-a-data-scientist-analyst/notebook)
 
